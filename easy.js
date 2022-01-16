@@ -31,8 +31,30 @@ var assert = require("assert")
 // Explanation: Empty array...
 
 const altNumbers = (numArray) => {
-    // TODO: COMPLETE THIS FUNCTION
-    return [];
+
+    // Keep track of the positive and negative numbers
+    const posNums = numArray.filter(x => x >= 0);
+    const negNums = numArray.filter(x => x < 0);
+
+    // Determine which array to start with by
+    // looking at the lengths of each array
+    let sign = 1;
+    if (negNums.length > posNums.length)
+        sign = -1;
+
+    // Now add in the numbers, alternating between positive and negative
+    const newArray = []
+    for (let i = 0; i < numArray.length; i++) {
+        if (sign > 0)
+            newArray.push(posNums.shift());
+        else
+            newArray.push(negNums.shift());
+
+        // Alternate the sign for the next number
+        sign *= -1;
+    }
+
+    return newArray;
 }
 
 module.exports = { altNumbers } // Do not modify this line
@@ -77,14 +99,14 @@ let array4 = []
 array4 = altNumbers(array4)
 assert(array4.length === 0)
 
-let array5 = [3,2,1,-1,-2,-3,-4]
+let array5 = [3, 2, 1, -1, -2, -3, -4]
 array5 = altNumbers(array5)
 const answer5 = [-1, 3, -2, 2, -3, 1, -4]
 for (let i = 0; i < array5.length; i++) {
     assert(array5[i] === answer5[i])
 }
 
-let array6 = [5,-1,-2,-3,-4,0,3]
+let array6 = [5, -1, -2, -3, -4, 0, 3]
 array6 = altNumbers(array6)
 const answer6 = [-1, 5, -2, 0, -3, 3, -4]
 for (let i = 0; i < array6.length; i++) {
